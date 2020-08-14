@@ -1,0 +1,22 @@
+#content {
+    background-color: white;
+    margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#table {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#content h1 {
+    font-size: 40px;
+    float: left;
+    display: inline;
+    margin-left: 30px;
+}

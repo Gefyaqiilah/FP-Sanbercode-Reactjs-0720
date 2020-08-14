@@ -1,0 +1,13 @@
+#contentcreate {
+    background-color: rgb(245, 245, 245);
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+#contentcreate h1 {
+    font-size: 40px;
+    margin: 20px;
+    padding: 10px;
+}

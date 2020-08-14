@@ -1,0 +1,8 @@
+.MuiAppBar-colorPrimary.test {
+    color: gold;
+    background-color: black;
+}
+
+.MuiPaper-root.changewarna {
+    background-color: black;
+}
