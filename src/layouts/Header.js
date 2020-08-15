@@ -165,7 +165,7 @@ export default function PersistentDrawerLeft() {
                 <List>
                     <ListItem >
                         <ListItemIcon><MailIcon /></ListItemIcon>
-                        <ListItemText>Table Game</ListItemText>
+                        <ListItemText><Linkto to="/game/tablegame">Table Game</Linkto></ListItemText>
                     </ListItem>
                 </List>
                 <Divider />

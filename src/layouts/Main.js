@@ -10,13 +10,12 @@ import {
 const Main = () => {
     return (
         <>
-            <div style={{ backgroundColor: "rgb(25, 29, 27)" }}>
-                < Router >
-                    <Header />
-                    <Section />
-                    <Footer />
-                </Router >
-            </div>
+
+            < Router >
+                <Header />
+                <Section />
+                <Footer />
+            </Router >
         </>
     )
 }

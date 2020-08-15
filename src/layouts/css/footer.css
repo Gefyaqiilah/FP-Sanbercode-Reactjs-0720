@@ -1,7 +1,10 @@
 #footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
     background-color: black;
-    height: 50%;
-    margin-top: 10px;
+    color: white;
+    text-align: center;
 
 }
 
