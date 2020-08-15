@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { MoviesContext } from '../../context/MoviesContext'
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import './css/TableMovie.css';
 
@@ -10,17 +9,19 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
+import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+
+import SearchIcon from '@material-ui/icons/Search';
+import AddBoxIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-
+import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
 
-import { Link as Linkto } from 'react';
 
 
 import axios from 'axios';
@@ -44,6 +45,12 @@ const TableMovie = () => {
         rating: true,
         duration: true
     })
+    const [inputfilter, setInputfilter] = useState({
+        genre: "",
+        rating: "",
+        year: ""
+    })
+    const [inputsearch, setInputsearch] = useState("")
     useEffect(() => {
         if (movies === null) {
             axios.get(`https://backendexample.sanbersy.com/api/movies`)
@@ -68,7 +75,6 @@ const TableMovie = () => {
                 })
         }
     })
-    console.log(movies)
 
     const Actions = ({ itemsid }) => {
 
@@ -78,7 +84,7 @@ const TableMovie = () => {
 
             axios.delete(`https://backendexample.sanbersy.com/api/movies/${itemsid}`)
                 .then(res => {
-                    console.log(res);
+                    alert('Berhasil Menghapus Data')
                 })
             setMovies([...newMovies])
 
@@ -105,7 +111,7 @@ const TableMovie = () => {
                     color="primary"
                     className={classes.button}
                     onClick={handleEdit}
-                    style={{ backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}> <EditIcon />
+                    style={{ backgroundColor: "black", color: "gold", fontWeight: 'bolder' }}> <EditIcon />
                 </Button>
                 {/* <Link to={`/movie/tablemovie/edit/${itemsid}`}>Edit</Link> */}
             </>
@@ -150,85 +156,163 @@ const TableMovie = () => {
         }
         setMovies([...duration]);
     }
+
+    const handleChangeFilter = (event) => {
+        let getfilter = event.target.name;
+        switch (getfilter) {
+            case "genre": setInputfilter({ ...inputfilter, genre: event.target.value })
+                break;
+            case "year": setInputfilter({ ...inputfilter, year: event.target.value })
+                break;
+            case "rating": setInputfilter({ ...inputfilter, rating: event.target.value })
+                break;
+            default: { break; }
+        }
+
+    }
+    console.log(inputfilter)
+    const handleFilter = (event) => {
+        event.preventDefault();
+        if (inputfilter.year !== "" && inputfilter.rating !== "" && inputfilter.genre !== "") {
+            let filteredmovie = movies.filter(x => x.year == inputfilter.year && x.rating == inputfilter.rating && x.genre === inputfilter.genre)
+            setMovies([...filteredmovie]);
+        } else {
+            alert('Mohon maaf kolom filter harus diisi semua, silahkan cek kembali !')
+        }
+    }
+
+    const handleChangeSearch = (event) => {
+        setInputsearch(event.target.value);
+    }
+    const handleSearch = (event) => {
+        if (inputsearch !== "") {
+            let search = movies.filter(x => x.title === inputsearch)
+            setMovies([...search])
+        } else {
+            alert('Kolom search belum diisi')
+        }
+    }
     return (
         <>
+            <h1 style={{ marginTop: "100px", marginLeft: "60px", fontSize: "30px", display: "inline-block" }}>Movies Lists</h1>
 
-            <div id="content">
-                <h1><span>Movies Lists</span></h1>
-                {/* <h4><span style={{ color: "white", fontWeight: "700", marginTop: "5px", backgroundColor: "black", padding: "5px", borderRadius: "4px" }}>Daftar berbagai macam film dalam satu tabel</span></h4> */}
+            <div id="filter">
+                <form >
+                    <InputLabel style={{ color: "black" }}>Filter by:</InputLabel>
+                    <TextField
+                        style={{ width: "100px" }}
+                        type="text"
+                        id="outlined-secondary"
+                        label="Genre"
+                        variant="outlined"
+                        name="genre"
+                        value={inputfilter.genre}
+                        onChange={handleChangeFilter}
 
+                    />
+                    <TextField
+                        style={{ width: "100px" }}
+                        type="number"
+                        id="outlined-secondary"
+                        label="Year"
+                        variant="outlined"
+                        name="year"
+                        value={inputfilter.year}
+                        onChange={handleChangeFilter}
 
-                {/* This Button uses a Font Icon, see the installation instructions in the Icon component docs. */}
+                    />
+                    <TextField
+                        style={{
+                            width: "100px"
+                        }}
+                        type="number"
+                        id="outlined-secondary"
+                        label="Rating"
+                        variant="outlined"
+                        name="rating"
+                        value={inputfilter.rating}
+                        onChange={handleChangeFilter}
 
+                    />
+                    <Button variant="contained" onClick={handleFilter} style={{ color: "gold", backgroundColor: "black", marginLeft: "10px", height: "55px" }}><FilterListIcon />Filter</Button>
+                    <TextField
+                        style={{
+                            width: "150px", float: "right"
+                        }}
+                        type="text"
+                        id="outlined-secondary"
+                        label="Search by title"
+                        variant="outlined"
+                        name="title"
+                        value={inputsearch}
+                        onChange={handleChangeSearch}
 
-                <Button
-                    href="/movie/tablemovie/create"
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    style={{ marginTop: "0px", marginLeft: "85%", fontSize: "19px", width: "150px", backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}
-                > Add Movie
+                    />
+                    <Button variant="contained" onClick={handleSearch} style={{ float: "right", color: "gold", backgroundColor: "black", marginRight: "10px", height: "55px" }}><SearchIcon />Search</Button>
+                    <Button
+                        href="/movie/tablemovie/create"
+                        variant="contained"
+                        color="primary"
+                        style={{ float: "right", marginRight: "5px", height: "55px", fontSize: "15px", width: "150px", backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}
+                    > <AddBoxIcon />Add Game
                  </Button>
-                <br />
-
-                {/* ...................................table.............................. */}
-                <TableContainer style={{ width: "90%", backgroundColor: "rgb(245, 245, 245)" }} id="table">
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead >
-                            <TableRow >
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="right">Actions</TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }}>No</TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="right">Title</TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="right">Description</TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px", width: "150px" }} align="left">Year
-                                    {click.year === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyYear} />}
-                                    {click.year === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyYear} />}
-
-                                </TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="right">Duration
-                                    {click.duration === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyDuration} />}
-                                    {click.duration === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyDuration} />}
-                                </TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="center">Genre</TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="center">Rating
-                                    {click.rating === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyRating} />}
-                                    {click.rating === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyRating} />}
-                                </TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="right">Review</TableCell>
-                                <TableCell style={{ color: "black", fontSize: "17px" }} align="center">Image URL</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {movies != null && movies.map((item, index) => {
-                                return (
-                                    <>
-                                        <TableRow key={index}>
-                                            <TableCell align="center">
-                                                <Actions itemsid={item.id} />
-                                            </TableCell>
-                                            <TableCell component="th" scope="row">{index + 1}</TableCell>
-                                            <TableCell align="center">{item.title}</TableCell>
-                                            <TableCell align="center">{item.description}</TableCell>
-                                            <TableCell align="center">{item.year}</TableCell>
-                                            <TableCell align="center">{item.duration}</TableCell>
-                                            <TableCell align="center">{item.genre}</TableCell>
-                                            <TableCell align="center">{item.rating}</TableCell>
-                                            <TableCell align="center">{item.review}</TableCell>
-                                            <TableCell align="center">{item.image_url}</TableCell>
-                                        </TableRow>
-                                    </>
-                                )
-                            })
-                            }
-
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                {/* ...............akhir table................... */}
-
-
-
+                </form>
             </div>
+            <br />
+
+            {/* ...................................table.............................. */}
+            <TableContainer style={{ border: "2px solid rgb(224, 224, 224)", backgroundColor: "white", marginTop: "10px", marginBottom: "50px", width: "90%", marginLeft: "auto", marginRight: "auto" }} id="table">
+                <Table className={classes.table} aria-label="customized table">
+                    <TableHead >
+                        <TableRow >
+                            <TableCell align="right">Actions</TableCell>
+                            <TableCell >No</TableCell>
+                            <TableCell align="right">Title</TableCell>
+                            <TableCell align="right">Description</TableCell>
+                            <TableCell align="left">Year
+                                    {click.year === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyYear} />}
+                                {click.year === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyYear} />}
+                            </TableCell>
+                            <TableCell align="right">Duration
+                                    {click.duration === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyDuration} />}
+                                {click.duration === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyDuration} />}
+                            </TableCell>
+                            <TableCell align="center">Genre</TableCell>
+                            <TableCell align="center">Rating
+                                    {click.rating === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyRating} />}
+                                {click.rating === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyRating} />}
+                            </TableCell>
+                            <TableCell align="right">Review</TableCell>
+                            <TableCell align="center">Image URL</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {movies != null && movies.map((item, index) => {
+                            return (
+                                <>
+                                    <TableRow key={index}>
+                                        <TableCell align="center">
+                                            <Actions itemsid={item.id} />
+                                        </TableCell>
+                                        <TableCell component="th" scope="row">{index + 1}</TableCell>
+                                        <TableCell align="center">{item.title}</TableCell>
+                                        <TableCell align="center">{item.description}</TableCell>
+                                        <TableCell align="center">{item.year}</TableCell>
+                                        <TableCell align="center">{item.duration}</TableCell>
+                                        <TableCell align="center">{item.genre}</TableCell>
+                                        <TableCell align="center">{item.rating}</TableCell>
+                                        <TableCell align="center">{item.review}</TableCell>
+                                        <TableCell align="center">{item.image_url}</TableCell>
+                                    </TableRow>
+                                </>
+                            )
+                        })
+                        }
+
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {/* ...............akhir table................... */}
         </>
     );
 }

@@ -5,3 +5,18 @@
     margin-right: auto;
     width: 80%;
 }
+
+#filter {
+    background-color: white;
+    margin-top: 10px;
+    width: 90%;
+    display: relative;
+    top: 10px;
+    display: inline-block;
+    margin-left: 70px;
+    padding: 10px;
+    border: 2px solid rgb(224, 224, 224);
+    border-radius: 5px;
+}
+
+#filter form {}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
+import './css/TableGame.css';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,12 +11,18 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import TextField from '@material-ui/core/TextField';
+
 import Button from '@material-ui/core/Button';
 
+import SearchIcon from '@material-ui/icons/Search';
+import AddBoxIcon from '@material-ui/icons/Add';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { InputLabel } from '@material-ui/core';
 
 const TableGame = () => {
     const [game, setGame] = useState(null);
@@ -26,6 +32,12 @@ const TableGame = () => {
         singleplayer: false,
         multiplayer: false
     })
+    const [input, setInput] = useState({
+        genre: "",
+        year: "",
+        platform: ""
+    })
+    const [inputsearch, setInputsearch] = useState("")
     const StyledTableCell = withStyles((theme) => ({
         head: {
             backgroundColor: theme.palette.common.white,
@@ -126,10 +138,11 @@ const TableGame = () => {
     const sortbySinglePlayer = (event) => {
         event.preventDefault();
         if (click.singleplayer === false) {
-            var sortsingleplayer = game.sort((a, z) => parseInt(a.singleplayer) - parseInt(z.singleplayer));
+            var sortsingleplayer = game.sort((a, z) => parseInt(a.singlePlayer) - parseInt(z.singlePlayer));
+            console.log(sortsingleplayer)
             setClick({ ...click, singleplayer: true })
         } else if (click.singleplayer === true) {
-            var sortsingleplayer = game.sort((a, z) => parseInt(z.singleplayer) - parseInt(a.singleplayer));
+            var sortsingleplayer = game.sort((a, z) => parseInt(z.singlePlayer) - parseInt(a.singlePlayer));
             setClick({ ...click, singleplayer: false })
         }
         setGame([...sortsingleplayer])
@@ -146,17 +159,109 @@ const TableGame = () => {
         setGame([...sortmultiplayer])
     }
 
+    const handleFilter = (event) => {
+
+        event.preventDefault();
+        if (input.platform !== "" && input.year !== "" & input.genre !== "") {
+            let filteredgame = game.filter(x => x.release === input.year && x.platform === input.platform && x.genre === input.genre)
+            console.log(filteredgame);
+            setGame([...filteredgame]);
+        } else {
+            alert('Mohon maaf kolom filter harus diisi semua')
+        }
+    }
+    const handleChange = (event) => {
+        let getName = event.target.name;
+        switch (getName) {
+            case "genre": setInput({ ...input, genre: event.target.value })
+                break;
+            case "year": setInput({ ...input, year: event.target.value })
+                break;
+            case "platform": setInput({ ...input, platform: event.target.value })
+                break;
+            default: { break; }
+        }
+    }
+    const handleChangeSearch = (event) => {
+        setInputsearch(event.target.value)
+    }
+    const handleSearch = event => {
+        if (inputsearch !== "") {
+            let search = game.filter(x => x.name === inputsearch)
+            setGame([...search])
+        } else {
+            alert('Maaf Kolom Search kosong, Silahkan isi kolom search')
+        }
+    }
     return (
         <>
             <h1 style={{ marginTop: "100px", marginLeft: "60px", fontSize: "30px", display: "inline-block" }}>Table Game</h1>
-            <Button
-                href="/game/tablegame/create"
-                variant="contained"
-                color="primary"
-                style={{ marginTop: "0", marginLeft: "80%", fontSize: "15px", width: "150px", backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}
-            > Add Game
+
+
+            <div id="filter">
+                <form >
+                    <InputLabel style={{ color: "black" }}>Filter by:</InputLabel>
+                    <TextField
+                        style={{ width: "100px" }}
+                        type="text"
+                        id="outlined-secondary"
+                        label="Genre"
+                        variant="outlined"
+                        name="genre"
+                        onChange={handleChange}
+                        value={input.genre}
+
+                    />
+                    <TextField
+                        style={{ width: "100px" }}
+                        type="number"
+                        id="outlined-secondary"
+                        label="Year"
+                        variant="outlined"
+                        name="year"
+                        value={input.year}
+                        onChange={handleChange}
+
+                    />
+                    <TextField
+                        style={{
+                            width: "100px"
+                        }}
+                        type="text"
+                        id="outlined-secondary"
+                        label="Platform"
+                        variant="outlined"
+                        name="platform"
+                        value={input.platform}
+                        onChange={handleChange}
+
+                    />
+                    <Button variant="contained" onClick={handleFilter} style={{ color: "gold", backgroundColor: "black", marginLeft: "10px", height: "55px" }}><FilterListIcon />Filter</Button>
+                    <TextField
+                        style={{
+                            width: "150px", float: "right"
+                        }}
+                        type="text"
+                        id="outlined-secondary"
+                        label="Search by name"
+                        variant="outlined"
+                        name="name"
+                        value={inputsearch}
+                        onChange={handleChangeSearch}
+
+                    />
+                    <Button variant="contained" onClick={handleSearch} style={{ float: "right", color: "gold", backgroundColor: "black", marginRight: "10px", height: "55px" }}><SearchIcon />Search</Button>
+                    <Button
+                        href="/game/tablegame/create"
+                        variant="contained"
+                        color="primary"
+                        style={{ float: "right", marginRight: "5px", height: "55px", fontSize: "15px", width: "150px", backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}
+                    > <AddBoxIcon />Add Game
                  </Button>
-            <TableContainer component={Paper} style={{ backgroundColor: "white", marginTop: "20px", marginBottom: "50px", width: "90%", marginLeft: "auto", marginRight: "auto" }}>
+                </form>
+            </div>
+
+            <TableContainer component={Paper} style={{ border: "2px solid rgb(224, 224, 224)", backgroundColor: "white", marginTop: "10px", marginBottom: "50px", width: "90%", marginLeft: "auto", marginRight: "auto" }}>
                 <Table className="table" aria-label="customized table">
                     <TableHead>
                         <TableRow>

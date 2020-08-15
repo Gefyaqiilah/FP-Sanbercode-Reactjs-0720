@@ -98,7 +98,12 @@ const EditMovie = () => {
                 duration: input.duration, genre: input.genre, rating: input.rating,
                 review: input.review, image_url: input.image_url
             })
-            history.push("/movie/tablemovie")
+                .then(res => {
+                    alert('Data Berhasil DiUpdate !')
+                    history.push("/movie/tablemovie")
+                })
+        } else {
+            alert('Maaf setiap kolom harus terisi, mohon cek kembali!')
         }
     }
     const handleBack = event => {

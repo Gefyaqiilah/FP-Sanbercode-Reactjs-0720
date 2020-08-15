@@ -1,16 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './css/CreateMovie.css';
 
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 
 import { MoviesContext } from '../../context/MoviesContext';
 import axios from 'axios';
@@ -36,8 +30,6 @@ const CreateMovie = () => {
         }
     )
     const history = useHistory();
-    console.log(input)
-    console.log(movies);
 
     useEffect(() => {
         if (movies.lists === null) {
