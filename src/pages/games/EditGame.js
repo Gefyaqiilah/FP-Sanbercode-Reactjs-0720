@@ -200,7 +200,7 @@ const EditGame = () => {
     return (
         <>
             <div id="contentcreate">
-                <h1> <span> Add Movie </span></h1 >
+                <h1> <span> Edit Game </span></h1 >
                 <form style={{ margin: "20px", padding: "15px" }} onSubmit={handleUpdate}>
                     <div>
                         <InputLabel style={{ float: "right", marginRight: "450px", color: "black", fontSize: "16px", fontWeight: 'bolder' }}> Genre: </InputLabel>

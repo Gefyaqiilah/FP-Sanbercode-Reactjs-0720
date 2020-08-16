@@ -2,3 +2,7 @@
 [0801/085335.434:ERROR:crash_report_database_win.cc(428)] unexpected header
 [0815/051959.692:ERROR:process_info.cc(359)] UncheckedAllocate
 [0815/081813.498:ERROR:process_info.cc(359)] UncheckedAllocate
+[0816/184850.605:ERROR:process_info.cc(359)] UncheckedAllocate
+[0816/184850.605:ERROR:process_info.cc(359)] UncheckedAllocate
+[0816/184911.935:ERROR:process_info.cc(359)] UncheckedAllocate
+[0816/184911.960:ERROR:process_info.cc(359)] UncheckedAllocate

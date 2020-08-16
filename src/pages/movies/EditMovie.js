@@ -114,7 +114,7 @@ const EditMovie = () => {
     return (
         <>
             <div id="contentcreate">
-                <h1><span>Add Movie</span></h1 >
+                <h1><span>Edit Movie</span></h1 >
                 <form style={{ margin: "20px", padding: "15px" }} onSubmit={handleUpdate}>
                     <div>
                         <InputLabel style={{ float: "right", marginRight: "400px", color: "black", fontSize: "16px", fontWeight: 'bolder' }}>Year Release:</InputLabel>

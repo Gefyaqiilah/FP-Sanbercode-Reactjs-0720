@@ -1,0 +1,61 @@
+#contentreview {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    width: 1050px;
+    height: 800px;
+    border: 5px solid whitesmoke;
+    border-radius: 10px;
+}
+
+#bagianatas {
+    background-color: rgb(14, 14, 14);
+    width: 1040px;
+    height: 200px;
+}
+
+#kotakitem {
+    padding: 20px;
+    margin-left: 50px;
+    margin-top: 40px;
+    width: 990px;
+
+    display: inline-block;
+}
+
+#itemjudul {
+    display: inline-block;
+    width: 750px;
+    color: white;
+    font-size: 40px;
+}
+
+#itemrating {
+    width: 200px;
+    display: inline-block;
+    float: right;
+    color: white;
+    font-size: 35px;
+}
+
+#itemkecil {
+    margin-top: 41px;
+    font-size: 20px;
+    color: white;
+    width: 600px;
+}
+
+#deksripsi {
+    margin-top: 10px;
+    height: auto;
+    width: 900px;
+}
+
+#deksripsi img {
+    display: inline-block;
+}
+
+#kontenkanan {
+    background-color: black;
+}

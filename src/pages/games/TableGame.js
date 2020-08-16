@@ -195,7 +195,7 @@ const TableGame = () => {
     }
     return (
         <>
-            <h1 style={{ marginTop: "100px", marginLeft: "60px", fontSize: "30px", display: "inline-block" }}>Table Game</h1>
+            <h1 style={{ color: "gold", marginTop: "100px", marginLeft: "60px", fontSize: "30px", display: "inline-block" }}>Table Game</h1>
 
 
             <div id="filter">

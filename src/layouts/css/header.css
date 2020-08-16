@@ -1,5 +1,6 @@
 .MuiAppBar-colorPrimary.test {
     color: gold;
+    font-weight: bolder;
     background-color: black;
 }
 

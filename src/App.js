@@ -4,10 +4,13 @@ import './App.css';
 import Main from './layouts/Main';
 
 import { MoviesProvider } from './context/MoviesContext';
+import { UserProvider } from './context/UserContext';
 function App() {
   return (
     <MoviesProvider>
-      <Main />
+      <UserProvider>
+        <Main />
+      </UserProvider>
     </MoviesProvider>
   );
 }

@@ -194,7 +194,7 @@ const TableMovie = () => {
     }
     return (
         <>
-            <h1 style={{ marginTop: "100px", marginLeft: "60px", fontSize: "30px", display: "inline-block" }}>Movies Lists</h1>
+            <h1 style={{ marginTop: "100px", marginLeft: "60px", fontSize: "30px", color: "gold", display: "inline-block" }}>Movies Lists</h1>
 
             <div id="filter">
                 <form >
@@ -265,25 +265,25 @@ const TableMovie = () => {
                 <Table className={classes.table} aria-label="customized table">
                     <TableHead >
                         <TableRow >
-                            <TableCell align="right">Actions</TableCell>
+                            <TableCell >Actions</TableCell>
                             <TableCell >No</TableCell>
-                            <TableCell align="right">Title</TableCell>
-                            <TableCell align="right">Description</TableCell>
-                            <TableCell align="left">Year
+                            <TableCell >Title</TableCell>
+                            <TableCell >Description</TableCell>
+                            <TableCell >Year
                                     {click.year === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyYear} />}
                                 {click.year === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyYear} />}
                             </TableCell>
-                            <TableCell align="right">Duration
+                            <TableCell >Duration
                                     {click.duration === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyDuration} />}
                                 {click.duration === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyDuration} />}
                             </TableCell>
-                            <TableCell align="center">Genre</TableCell>
-                            <TableCell align="center">Rating
+                            <TableCell >Genre</TableCell>
+                            <TableCell >Rating
                                     {click.rating === true && <ArrowUpwardIcon style={{ float: "left" }} onClick={sortbyRating} />}
                                 {click.rating === false && <ArrowDownwardIcon style={{ float: "right" }} onClick={sortbyRating} />}
                             </TableCell>
-                            <TableCell align="right">Review</TableCell>
-                            <TableCell align="center">Image URL</TableCell>
+                            <TableCell >Review</TableCell>
+                            <TableCell >Image URL</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -291,18 +291,18 @@ const TableMovie = () => {
                             return (
                                 <>
                                     <TableRow key={index}>
-                                        <TableCell align="center">
+                                        <TableCell align="left">
                                             <Actions itemsid={item.id} />
                                         </TableCell>
                                         <TableCell component="th" scope="row">{index + 1}</TableCell>
-                                        <TableCell align="center">{item.title}</TableCell>
-                                        <TableCell align="center">{item.description}</TableCell>
-                                        <TableCell align="center">{item.year}</TableCell>
-                                        <TableCell align="center">{item.duration}</TableCell>
-                                        <TableCell align="center">{item.genre}</TableCell>
-                                        <TableCell align="center">{item.rating}</TableCell>
-                                        <TableCell align="center">{item.review}</TableCell>
-                                        <TableCell align="center">{item.image_url}</TableCell>
+                                        <TableCell align="left">{item.title}</TableCell>
+                                        <TableCell align="left">{item.description}</TableCell>
+                                        <TableCell align="left">{item.year}</TableCell>
+                                        <TableCell align="left">{item.duration}</TableCell>
+                                        <TableCell align="left">{item.genre}</TableCell>
+                                        <TableCell align="left">{item.rating}</TableCell>
+                                        <TableCell align="left">{item.review}</TableCell>
+                                        <TableCell align="left">{item.image_url}</TableCell>
                                     </TableRow>
                                 </>
                             )

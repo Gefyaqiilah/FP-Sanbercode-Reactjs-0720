@@ -1,0 +1,16 @@
+#judul {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    background-color: gold;
+    width: 1050px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+#judul h1 {
+    text-align: center;
+    margin-top: 22px;
+    padding: 10px;
+    font-size: 30px;
+}
