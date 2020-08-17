@@ -254,7 +254,7 @@ const TableMovie = () => {
                         variant="contained"
                         color="primary"
                         style={{ float: "right", marginRight: "5px", height: "55px", fontSize: "15px", width: "150px", backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}
-                    > <AddBoxIcon />Add Game
+                    > <AddBoxIcon />Add Movie
                  </Button>
                 </form>
             </div>

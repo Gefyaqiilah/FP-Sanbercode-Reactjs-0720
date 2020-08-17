@@ -15,6 +15,7 @@ import DetailGame from '../pages/games/DetailGame';
 import Login from '../pages/login/Login';
 import Register from '../pages/login/Register';
 import Home from '../pages/home/Home';
+import ChangePassword from '../pages/login/ChangePassword';
 
 import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
@@ -55,7 +56,7 @@ const Section = () => {
                     {/*............LOGIN............................*/}
                     <LoginRoute exact path="/login" user={user} component={Login} />
                     <LoginRoute exact path="/register" user={user} component={Register} />
-
+                    <PrivateRoute exact path="/changepassword/:id" user={user} component={ChangePassword} />
 
 
                 </Switch>

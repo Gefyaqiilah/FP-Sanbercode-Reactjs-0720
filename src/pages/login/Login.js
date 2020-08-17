@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 import Button from '@material-ui/core/Button';
@@ -72,16 +72,40 @@ const Login = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`https://backendexample.sanbersy.com/api/login`, { username: input.username, password: input.password })
-            .then(hasil => {
-                console.log('berhasilmenambahkandata', hasil)
-                localStorage.setItem("login", JSON.stringify({ username: input.username, password: input.password }))
 
-            }).catch(gagal => {
-                console.log("gagal", gagal)
+        axios.post(`https://backendexample.sanbersy.com/api/login`, { username: input.username, password: input.password })
+            .then(res => {
+                if (res.data.id) {
+                    setUsers({
+                        username: input.username,
+                        password: input.password
+                    })
+                    localStorage.setItem("login", JSON.stringify({ id: res.data.id, username: res.data.username, password: res.data.password }))
+                    alert("Login berhasil!")
+                    setInput({ username: "", password: "" })
+                    console.log(users)
+                    console.log(res)
+                    history.push("/")
+
+                } else {
+                    alert('Username dan Password Salah')
+                }
+            }
+            )
+            .catch(err => {
+                console.log("gagal")
             })
+        console.log(users)
+
+        // axios.post(`https://backendexample.sanbersy.com/api/login`, { username: input.username, password: input.password })
+        //     .then(hasil => {
+        //         console.log('berhasilmenambahkandata', hasil)
+        //         localStorage.setItem("login", JSON.stringify({ username: input.username, password: input.password }))
+
+        //     }).catch(gagal => {
+        //         console.log("gagal", gagal)
+        //     })
     }
-    console.log(users)
     const handleBack = (e) => {
         history.push("/");
     }
@@ -140,7 +164,7 @@ const Login = () => {
                                 <h4 onClick={ToRegister} style={{ cursor: "pointer" }}>Belum punya akun? Registrasi disini </h4>
                             </Grid>
                             <Grid item  >
-                                <h3 onClick={handleBack} style={{ cursor: "pointer", color: "red" }}>Back</h3>
+                                <h4 onClick={handleBack} style={{ cursor: "pointer", color: "red" }}>Back</h4>
                             </Grid>
                         </Grid>
                     </form>

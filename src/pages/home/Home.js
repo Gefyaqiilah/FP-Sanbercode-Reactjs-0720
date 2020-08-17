@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './css/Home.css';
 
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,7 +17,7 @@ const Home = () => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
-            marginTop: "50px",
+            marginTop: "10px",
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'space-around',
@@ -31,7 +32,12 @@ const Home = () => {
         },
         title: {
             color: "white",
-            fontSize: "20px"
+            fontSize: "20px",
+            cursor: "pointer",
+            '&:hover': {
+                fontWeight: "bold",
+                color: "gold"
+            }
         },
         titleBar: {
             background:
@@ -41,6 +47,7 @@ const Home = () => {
 
     const classes = useStyles();
     const [movies, setMovies] = useState(null)
+    const [games, setGames] = useState(null)
     const history = useHistory();
 
     useEffect(() => {
@@ -50,32 +57,82 @@ const Home = () => {
                     setMovies(res.data)
                 })
                 .catch(err => {
-                    console.log("gagal mengambil data, cek koneksi internet anda", err)
+                    console.log("gagal mengambil data movies, cek koneksi internet anda", err)
+                })
+        }
+    })
+
+    useEffect(() => {
+        if (games === null) {
+            Axios.get(`https://backendexample.sanbersy.com/api/games`)
+                .then(res => {
+                    setGames(res.data)
+                })
+                .catch(err => {
+                    console.log("gagal mengambil data games, cek koneksi internet anda", err)
                 })
         }
     })
     return (
-        <div className={classes.root}>
-            <GridList className={classes.gridList} cols={2.5}>
-                {movies !== null && movies.map((item, index) => (
-                    <GridListTile key={index}>
-                        <img src={item.image_url} alt={item.title} onClick={(e) => history.push(`/movie/reviewmovie/${item.id}`)} />
-                        <GridListTileBar
-                            title={item.title}
-                            classes={{
-                                root: classes.titleBar,
-                                title: classes.title,
-                            }}
-                            actionIcon={
-                                <IconButton aria-label={`star ${item.title}`}>
-                                    <StarBorderIcon style={{ color: "yellow" }} className={classes.title} />
-                                </IconButton>
-                            }
-                        />
-                    </GridListTile>
-                ))}
-            </GridList>
-        </div>
+        <>
+            <div id="movies">
+                <h1>All Movies</h1>
+            </div>
+            <div id="moviesdesc">
+                <h1>All movies you can choose :</h1>
+            </div>
+            <div className={classes.root}>
+                <GridList className={classes.gridList} cols={2.5}>
+                    {movies !== null && movies.map((item, index) => (
+                        <GridListTile key={index}>
+                            <img src={item.image_url} alt={item.title} onClick={(e) => history.push(`/movie/reviewmovie/${item.id}`)} />
+                            <GridListTileBar
+                                title={item.title}
+                                classes={{
+                                    root: classes.titleBar,
+                                    title: classes.title,
+                                }}
+                                onClick={(e) => history.push(`/movie/reviewmovie/${item.id}`)}
+                                actionIcon={
+                                    <IconButton aria-label={`star ${item.title}`}>
+                                        <StarBorderIcon style={{ color: "yellow" }} className={classes.title} />
+                                    </IconButton>
+                                }
+                            />
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+
+            <div id="games">
+                <h1>All Games</h1>
+            </div>
+            <div id="gamesdesc">
+                <h1>All games you can choose :</h1>
+            </div>
+            <div className={classes.root}>
+                <GridList className={classes.gridList} cols={2.5}>
+                    {games !== null && games.map((item, index) => (
+                        <GridListTile key={index}>
+                            <img src={item.image_url} alt={item.name} onClick={(e) => history.push(`/game/detailgame/${item.id}`)} />
+                            <GridListTileBar
+                                title={item.name}
+                                classes={{
+                                    root: classes.titleBar,
+                                    title: classes.title,
+                                }}
+                                onClick={(e) => history.push(`/game/detailgame/${item.id}`)}
+                                actionIcon={
+                                    <IconButton aria-label={`star ${item.name}`}>
+                                        <StarBorderIcon style={{ color: "yellow" }} className={classes.title} />
+                                    </IconButton>
+                                }
+                            />
+                        </GridListTile>
+                    ))}
+                </GridList>
+            </div>
+        </>
     );
 }
 export default Home;

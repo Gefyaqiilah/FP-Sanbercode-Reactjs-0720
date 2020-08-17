@@ -79,11 +79,12 @@ const Register = () => {
             axios.post(`https://backendexample.sanbersy.com/api/users`, { username: input.username, password: input.password })
                 .then(res => {
                     alert('Akun anda berhasil dibuat!')
-                    localStorage.setItem("login", JSON.stringify({ username: input.username, password: input.password }))
+                    localStorage.setItem("login", JSON.stringify({ id: res.data.id, username: input.username, password: input.password }))
                     setInput({
                         username: "",
                         password: ""
                     })
+                    history.push("/");
                 })
                 .catch(err => {
                     console.log("Error", err)
@@ -105,7 +106,7 @@ const Register = () => {
                     Register
         </Typography>
                 <form className={classes.form} Validate onSubmit={handleSubmit}>
-                    <InputLabel className={classes.label}>Username :</InputLabel>
+                    <InputLabel className={classes.label}>Masukan Username :</InputLabel>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -120,7 +121,7 @@ const Register = () => {
                         onChange={handleChange}
                         value={input.username}
                     />
-                    <InputLabel className={classes.label}>Password :</InputLabel>
+                    <InputLabel className={classes.label}>Masukan Password :</InputLabel>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -143,8 +144,11 @@ const Register = () => {
                         <ExitToAppOutlinedIcon /> Sign Up
           </Button>
                     <Grid container>
-                        <Grid item  >
-                            <h3 onClick={handleBack} style={{ cursor: "pointer" }}>Back</h3>
+                        <Grid item xs >
+                            <h4 onClick={() => history.push("/login")} style={{ cursor: "pointer" }}>Udah punya akun? Login disini</h4>
+                        </Grid>
+                        <Grid item >
+                            <h4 onClick={handleBack} style={{ cursor: "pointer", color: "red" }}>Back</h4>
                         </Grid>
                     </Grid>
                 </form>

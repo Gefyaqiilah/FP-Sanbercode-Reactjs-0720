@@ -206,7 +206,7 @@ const EditMovie = () => {
                             style={{ width: "400px", marginTop: '10px' }}
                             type="number"
                             id="outlined-secondary"
-                            label="Rating"
+                            label="Rating 1-10"
                             variant="outlined"
                             name="rating"
                             onChange={handleChange}

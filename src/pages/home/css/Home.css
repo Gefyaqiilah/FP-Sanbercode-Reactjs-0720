@@ -1,0 +1,35 @@
+#movies {
+    margin-top: 100px;
+    border-radius: 10px;
+    color: gold;
+    width: 250px;
+    text-align: center;
+    font-size: 30px;
+    margin-left: 10px;
+    background-color: black;
+}
+
+#moviesdesc {
+    margin-left: 20px;
+    margin-top: 0px;
+    color: white;
+    font-size: 10px;
+}
+
+#games {
+    margin-top: 100px;
+    border-radius: 10px;
+    color: gold;
+    width: 250px;
+    text-align: center;
+    font-size: 30px;
+    margin-left: 10px;
+    background-color: black;
+}
+
+#gamesdesc {
+    margin-left: 20px;
+    margin-top: 0px;
+    color: white;
+    font-size: 10px;
+}

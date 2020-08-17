@@ -2,7 +2,7 @@ import React from 'react';
 import './css/header.css';
 
 import { Link as Linkto } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -92,6 +92,10 @@ export default function PersistentDrawerLeft() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const history = useHistory();
+    const getId = JSON.parse(localStorage.getItem('login')) ? JSON.parse(localStorage.getItem('login')).id : 0;
+    const getUsername = JSON.parse(localStorage.getItem('login')) ? JSON.parse(localStorage.getItem('login')).username : null;
+
+
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -106,6 +110,14 @@ export default function PersistentDrawerLeft() {
     }
     const Logout = e => {
         localStorage.removeItem("login");
+        history.push("/");
+    }
+    const ToChangePassword = e => {
+        if (getId === 0) {
+            return <Redirect to="/login" />
+        } else {
+            history.push(`/changepassword/${getId}`);
+        }
     }
     return (
         <div className={classes.root}>
@@ -124,7 +136,7 @@ export default function PersistentDrawerLeft() {
                     >
                         <MenuIcon style={{ color: "white" }} />
                     </IconButton>
-                    <Typography variant="h7" noWrap style={{}}>
+                    <Typography variant="h7" noWrap style={{ cursor: "pointer" }} onClick={e => history.push("/")}>
                         AYAMBERKOKOK
           </Typography>
                     <Typography variant="h8" style={{ marginLeft: "80%", float: "right", color: "white", fontWeight: "bold", cursor: "pointer" }} onClick={ToLogin} >
@@ -135,7 +147,7 @@ export default function PersistentDrawerLeft() {
                         }
                         {localStorage.getItem("login") !== null &&
                             <>
-                                Halo {localStorage.login}
+                                Halo {getUsername}
                             </>
                         }
                     </Typography>
@@ -190,14 +202,38 @@ export default function PersistentDrawerLeft() {
                     </ListItem>
                 </List>
                 <Divider />
-                <List>
-                    {localStorage.getItem("login") !== null &&
+                {localStorage.getItem("login") !== null &&
+                    <List>
                         <ListItem >
                             <ListItemIcon><ExitToAppIcon style={{ color: "black" }} /></ListItemIcon>
-                            <ListItemText onClick={Logout} style={{ cursor: "pointer" }}>Logout</ListItemText>
+                            <ListItemText onClick={ToChangePassword} ><span style={{ cursor: "pointer", color: "black", fontWeight: "bold" }}>Change Password</span></ListItemText>
                         </ListItem>
-                    }
-                </List>
+                    </List>
+                }
+                {localStorage.getItem("login") !== null &&
+                    <List>
+                        <ListItem >
+                            <ListItemIcon><ExitToAppIcon style={{ color: "black" }} /></ListItemIcon>
+                            <ListItemText onClick={Logout} ><span style={{ cursor: "pointer", color: "black", fontWeight: "bold" }}>Logout</span></ListItemText>
+                        </ListItem>
+                    </List>
+                }
+                {localStorage.getItem("login") === null &&
+                    <List>
+                        <ListItem >
+                            <ListItemIcon><ExitToAppIcon style={{ color: "black" }} /></ListItemIcon>
+                            <ListItemText onClick={e => history.push("/login")} ><span style={{ cursor: "pointer", color: "black", fontWeight: "bold" }}>Login</span></ListItemText>
+                        </ListItem>
+                    </List>
+                }
+                {localStorage.getItem("login") === null &&
+                    <List>
+                        <ListItem >
+                            <ListItemIcon><ExitToAppIcon style={{ color: "black" }} /></ListItemIcon>
+                            <ListItemText onClick={e => history.push("/register")} ><span style={{ cursor: "pointer", color: "black", fontWeight: "bold" }}>Register</span></ListItemText>
+                        </ListItem>
+                    </List>
+                }
             </Drawer>
         </div >
     );

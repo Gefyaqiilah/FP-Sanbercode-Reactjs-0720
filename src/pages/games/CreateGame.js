@@ -22,7 +22,7 @@ const CreateGame = () => {
         checkedmultiplayer: false,
         multiplayer: 0,
         platform: "",
-        release: 0,
+        release: "",
         image_url: ""
     });
     const history = useHistory();
