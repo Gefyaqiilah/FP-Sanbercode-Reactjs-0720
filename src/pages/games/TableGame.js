@@ -252,7 +252,7 @@ const TableGame = () => {
                     />
                     <Button variant="contained" onClick={handleSearch} style={{ float: "right", color: "gold", backgroundColor: "black", marginRight: "10px", height: "55px" }}><SearchIcon />Search</Button>
                     <Button
-                        href="/game/tablegame/create"
+                        onClick={() => history.push("/game/tablegame/create")}
                         variant="contained"
                         color="primary"
                         style={{ float: "right", marginRight: "5px", height: "55px", fontSize: "15px", width: "150px", backgroundColor: "gold", color: "black", fontWeight: 'bolder' }}
